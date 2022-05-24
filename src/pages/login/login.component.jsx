@@ -17,44 +17,26 @@ import {
 import { FaUserAlt, FaLock } from "react-icons/fa";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { fetchLogin } from "../../store/actions/authActionsCreator";
+import { useForm } from "react-hook-form";
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaLock = chakra(FaLock);
 
 export const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data) => postLogin(data.email, data.password);
   const postLogin = async (email, password) => {
-    const data = {
-      correo: email,
-      password,
-    };
-    const url = `http://localhost:8080/api/auth/login`;
-
-    const config = {
-      method: "post",
-      url,
-      headers: {
-        "Content-Type": "application/json",
-      },
-      data,
-    };
-    try {
-      const { data } = await axios(config);
-      if (data.msg === "login ok") {
-        localStorage.setItem("user", JSON.stringify(data.usuario));
-        console.log(
-          "🚀 ~ file: login.component.jsx ~ line 45 ~ postLogin ~ data",
-          data
-        );
-        navigate("/index");
-      }
-    } catch (error) {
-      console.log(
-        "🚀 ~ file: login.component.jsx ~ line 47 ~ postLogin ~ error",
-        error
-      );
-      return error;
+    const res = await dispatch(fetchLogin(email, password));
+    if (res === "ok") {
+      navigate("/index");
     }
   };
   const handleShowClick = () => setShowPassword(!showPassword);
@@ -82,7 +64,7 @@ export const Login = () => {
         />
         <Heading color='teal.400'>Inventory</Heading>
         <Box minW={{ base: "90%", md: "468px" }}>
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Stack
               spacing={4}
               p='1rem'
@@ -95,8 +77,14 @@ export const Login = () => {
                     pointerEvents='none'
                     children={<CFaUserAlt color='gray.300' />}
                   />
-                  <Input type='email' placeholder='Email' />
+                  <Input
+                    type='email'
+                    placeholder='Email'
+                    autoComplete='true'
+                    {...register("email", { required: true })}
+                  />
                 </InputGroup>
+                {errors.email && <span>Escribir un correo</span>}
               </FormControl>
               <FormControl>
                 <InputGroup mb={3}>
@@ -108,6 +96,8 @@ export const Login = () => {
                   <Input
                     type={showPassword ? "text" : "password"}
                     placeholder='Password'
+                    autoComplete='true'
+                    {...register("password", { required: true })}
                   />
                   <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleShowClick}>
@@ -115,6 +105,7 @@ export const Login = () => {
                     </Button>
                   </InputRightElement>
                 </InputGroup>
+                {errors.password && <span>Escribir una contraseña</span>}
               </FormControl>
               <Button
                 borderRadius={0}
@@ -122,10 +113,10 @@ export const Login = () => {
                 variant='solid'
                 colorScheme='teal'
                 width='full'
-                onClick={(e) => {
+                /* onClick={(e) => {
                   e.preventDefault();
                   postLogin("test1@test.com", "123456");
-                }}
+                }} */
               >
                 Login
               </Button>

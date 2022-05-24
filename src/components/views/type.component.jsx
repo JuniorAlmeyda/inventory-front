@@ -25,7 +25,7 @@ export const Type = () => {
           width='200px'
           height='100px'
           p='20'
-          onClick={() => navigate("/crud")}
+          onClick={() => navigate("/crud/categoria")}
         >
           <Text fontSize='xl'>Categoría</Text>
         </Button>
@@ -37,6 +37,7 @@ export const Type = () => {
           width='200px'
           height='100px'
           p='20'
+          onClick={() => navigate("/crud/producto")}
         >
           <Text fontSize='xl'>Producto</Text>
         </Button>
