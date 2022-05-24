@@ -105,7 +105,7 @@ const PreviewImage = (props, ref) => {
   );
 };
 
-export default function UploadImage() {
+export default function UploadImage({onChangeFile}) {
   const controls = useAnimation();
   const startAnimation = () => controls.start("hover");
   const stopAnimation = () => controls.stop();
@@ -180,6 +180,7 @@ export default function UploadImage() {
               accept="image/*"
               onDragEnter={startAnimation}
               onDragLeave={stopAnimation}
+              onChange={onChangeFile}
             />
           </Box>
         </Box>

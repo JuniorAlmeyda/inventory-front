@@ -1,20 +1,15 @@
+import Aside from "../../components/aside/aside.component";
+import Crud from "../../components/views/crud.component";
 
-import Aside from '../../components/aside/aside.component';
-import Crud from '../../components/views/crud.component';
+import { Flex } from "@chakra-ui/react";
 
-import {
-  Flex,
-} from '@chakra-ui/react'
-
-export const CrudWithAside = () => {
-
-  return(
+const CrudWithAside = () => {
+  return (
     <Flex>
-      <Aside/>
-      <Crud/>
+      <Aside />
+      <Crud />
     </Flex>
   );
-
-}
+};
 
 export default CrudWithAside;

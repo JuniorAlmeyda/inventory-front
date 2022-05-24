@@ -1,48 +1,51 @@
 import { useState } from "react";
-import {
-  Box,
-  Flex,
-  Image,
-  Button,
-  Stack,
-} from '@chakra-ui/react'
+import { Box, Flex, Image, Button, Stack } from "@chakra-ui/react";
 
-import { CheckCircleIcon, EmailIcon, SettingsIcon } from '@chakra-ui/icons'
-
+import { CheckCircleIcon, EmailIcon, SettingsIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Aside = () => {
-  const [user] = useState('Junior Almeyda Ortiz');
-  const [email] = useState('jr.almeyda7@gmail.com');
-  const [rol] = useState('ADMIN_ROLE');
+  const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
+  console.log(
+    "🚀 ~ file: aside.component.jsx ~ line 11 ~ Aside ~ usuario",
+    user
+  );
   return (
     <Flex
-      flexDirection="column"
-      width="30%"
-      height="100vh"
-      backgroundColor="gray.200"
-      justifyContent="center"
-      alignItems="center"
+      flexDirection='column'
+      width='30%'
+      height='100vh'
+      backgroundColor='gray.200'
+      justifyContent='center'
+      alignItems='center'
     >
       <Image
         borderRadius='full'
         boxSize='250px'
-        src='https://bit.ly/dan-abramov'
+        src={user.img}
         alt='Dan Abramov'
       />
-      <Box mt='10' fontSize='xl'> 
-        <CheckCircleIcon width={5} height={5} color="teal.500"/> {user}
+      <Box mt='10' fontSize='xl'>
+        <CheckCircleIcon width={5} height={5} color='teal.500' /> {user.nombre}
       </Box>
 
-      <Box mt='10' fontSize='xl'> 
-        <EmailIcon width={5} height={5} color="teal.500"/> {email}
+      <Box mt='10' fontSize='xl'>
+        <EmailIcon width={5} height={5} color='teal.500' /> {user.correo}
       </Box>
 
-      <Box mt='10' fontSize='xl'> 
-        <SettingsIcon width={5} height={5} color="teal.500"/> {rol}
+      <Box mt='10' fontSize='xl'>
+        <SettingsIcon width={5} height={5} color='teal.500' /> {user.rol}
       </Box>
 
       <Stack mt='10' spacing={4} direction='row' align='center'>
-        <Button colorScheme='teal' variant='solid' size='lg'>
+        <Button
+          colorScheme='teal'
+          variant='solid'
+          size='lg'
+          onClick={() => navigate("/createUser")}
+        >
           Crear Cuenta
         </Button>
 
@@ -50,11 +53,8 @@ export const Aside = () => {
           Editar Perfil
         </Button>
       </Stack>
-
     </Flex>
-
   );
-
-}
+};
 
 export default Aside;
