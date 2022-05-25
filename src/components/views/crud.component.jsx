@@ -22,6 +22,20 @@ export const Crud = () => {
       navigate("/producto/listar");
     }
   };
+  const handlerEdit = () => {
+    if (path[2] === "categoria") {
+      navigate("/categoria/editar");
+    } else if (path[2] === "producto") {
+      navigate("/producto/editar");
+    }
+  };
+  const handlerDelete = () => {
+    if (path[2] === "categoria") {
+      navigate("/categoria/eliminar");
+    } else if (path[2] === "producto") {
+      navigate("/producto/eliminar");
+    }
+  };
   return (
     <Flex
       flexDirection='column'
@@ -67,6 +81,7 @@ export const Crud = () => {
           width='200px'
           height='100px'
           p='20'
+          onClick={handlerEdit}
         >
           <Text fontSize='xl'>Editar</Text>
         </Button>
@@ -78,6 +93,7 @@ export const Crud = () => {
           width='200px'
           height='100px'
           p='20'
+          onClick={handlerDelete}
         >
           <Text fontSize='xl'>Eliminar</Text>
         </Button>

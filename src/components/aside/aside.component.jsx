@@ -49,9 +49,6 @@ export const Aside = () => {
           Crear Cuenta
         </Button>
 
-        <Button colorScheme='teal' variant='solid' size='lg'>
-          Editar Perfil
-        </Button>
       </Stack>
     </Flex>
   );

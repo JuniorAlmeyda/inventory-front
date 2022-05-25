@@ -10,6 +10,10 @@ import RegisterCategory from "../pages/register/category/category.component";
 import RegisterProduct from "../pages/register/product/product.component";
 import GetProductsWithAside from "../pages/getting/product/getProduct.component";
 import GetCategoriesWithAside from "../pages/getting/category/getCategory.component";
+import EditCategory from "../pages/edit/category/category.component";
+import DeleteCategory from "../pages/delete/category/category.component";
+import DeleteProduct from "../pages/delete/product/product.component";
+import EditProduct from "../pages/edit/product/product.component";
 
 const { store } = configureStore();
 
@@ -27,14 +31,14 @@ const Router = () => {
           <Route path='categoria'>
             <Route path='crear' element={<RegisterCategory />} />
             <Route path='listar' element={<GetCategoriesWithAside />} />
-            <Route path='editar' element={<CrudWithAside />} />
-            <Route path='eliminar' element={<CrudWithAside />} />
+            <Route path='editar' element={<EditCategory />} />
+            <Route path='eliminar' element={<DeleteCategory />} />
           </Route>
           <Route path='producto'>
             <Route path='crear' element={<RegisterProduct />} />
             <Route path='listar' element={<GetProductsWithAside />} />
-            <Route path='editar' element={<CrudWithAside />} />
-            <Route path='eliminar' element={<CrudWithAside />} />
+            <Route path='editar' element={<EditProduct />} />
+            <Route path='eliminar' element={<DeleteProduct />} />
           </Route>
           <Route path='/createUser' element={<User />} />
         </Routes>
