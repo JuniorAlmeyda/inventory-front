@@ -13,17 +13,29 @@ import {
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { postAddCategory } from "../../../store/services/categoryServices";
+import { deleteProductById } from '../../../store/services/productServices';
+import Swal from 'sweetalert2';
 const CFaTrash = chakra(FaTrash);
 
-export const DeleteProduct = () => {
+ const DeleteProduct = () => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => postAddCategory(data.nombre);
+  const onSubmit = async (data) => {
+    const res= await  deleteProductById(data.id)
+    console.log('🚀 ~ file: product.component.jsx ~ line 28 ~ onSubmit ~ res', res)
+    if (res.statusText === 'OK') {
+      Swal.fire(
+        'el producto ha sido eliminado',
+        '"',
+        'success'
+      )
+      navigate('/index');
+    };
+  }
   return (
     <Flex
       flexDirection='column'
@@ -58,7 +70,7 @@ export const DeleteProduct = () => {
                   <Input
                     type='user'
                     placeholder='Id del Producto a Eliminar'
-                    {...register("nombre", { required: true })}
+                    {...register("id", { required: true })}
                   />
                 </InputGroup>
                 {errors.nombre && <span>ingresar un id</span>}

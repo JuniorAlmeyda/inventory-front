@@ -13,17 +13,27 @@ import {
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { postAddCategory } from "../../../store/services/categoryServices";
+import { deleteCategoryById } from "../../../store/services/categoryServices";
+import Swal from 'sweetalert2';
 const CFaTrash = chakra(FaTrash);
-
-export const DeleteCategory = () => {
+ const DeleteCategory = () => {
   const navigate = useNavigate();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => postAddCategory(data.nombre);
+  const onSubmit = async(data) => {
+    const res =await deleteCategoryById(data.id)
+    if (res.statusText === 'OK') {
+      Swal.fire(
+        'la categoria ha sido eliminado',
+        '"',
+        'success'
+      )
+      navigate('/index');
+    };
+  };
   return (
     <Flex
       flexDirection='column'
@@ -58,10 +68,10 @@ export const DeleteCategory = () => {
                   <Input
                     type='user'
                     placeholder='Id de la Categoría a Eliminar'
-                    {...register("nombre", { required: true })}
+                    {...register("id", { required: true })}
                   />
                 </InputGroup>
-                {errors.nombre && <span>ingresar un id</span>}
+                {errors.id && <span>ingresar un id</span>}
               </FormControl>
 
               <Stack mt='10' spacing={4} direction='row' align='center'>

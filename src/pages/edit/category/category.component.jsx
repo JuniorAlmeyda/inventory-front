@@ -13,7 +13,8 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { postAddCategory } from "../../../store/services/categoryServices";
+import { editCategory } from "../../../store/services/categoryServices";
+import Swal from 'sweetalert2';
 const CFaEdit = chakra(FaEdit);
 
 export const EditCategory = () => {
@@ -23,7 +24,18 @@ export const EditCategory = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => postAddCategory(data.nombre);
+  const onSubmit = async(data) => {
+    const res = await editCategory(data.id,data.nombre);
+    if (res.statusText === 'OK') {
+      Swal.fire(
+        'la categoria ha sido editada',
+        '"',
+        'success'
+      )
+      navigate('/index');
+    }
+    
+  };
   return (
     <Flex
       flexDirection='column'
@@ -58,10 +70,10 @@ export const EditCategory = () => {
                   <Input
                     type='user'
                     placeholder='Id de la Categoría a Editar'
-                    {...register("nombre", { required: true })}
+                    {...register("id", { required: true })}
                   />
                 </InputGroup>
-                {errors.nombre && <span>ingresar un id</span>}
+                {errors.id && <span>ingresar un id</span>}
               </FormControl>
 
               <FormControl>
@@ -108,5 +120,4 @@ export const EditCategory = () => {
     </Flex>
   );
 };
-
 export default EditCategory;

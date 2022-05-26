@@ -13,7 +13,8 @@ import {
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { postAddCategory } from "../../../store/services/categoryServices";
+import { editProduct } from "../../../store/services/productServices";
+import Swal from 'sweetalert2';
 const CFaEdit = chakra(FaEdit);
 
 export const EditCategory = () => {
@@ -23,7 +24,17 @@ export const EditCategory = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => postAddCategory(data.nombre);
+  const onSubmit =async (data) => {
+    const res = await editProduct(data.id,data.nombre)
+    if (res.statusText === 'OK') {
+      Swal.fire(
+        'el producto ha sido editada',
+        '"',
+        'success'
+      )
+      navigate('/index');
+    }
+  };
   return (
     <Flex
       flexDirection='column'
@@ -58,7 +69,7 @@ export const EditCategory = () => {
                   <Input
                     type='user'
                     placeholder='Id del producto a Editar'
-                    {...register("nombre", { required: true })}
+                    {...register("id", { required: true })}
                   />
                 </InputGroup>
                 {errors.nombre && <span>ingresar un id</span>}

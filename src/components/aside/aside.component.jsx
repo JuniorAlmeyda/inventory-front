@@ -8,10 +8,6 @@ import { useSelector } from "react-redux";
 export const Aside = () => {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
-  console.log(
-    "🚀 ~ file: aside.component.jsx ~ line 11 ~ Aside ~ usuario",
-    user
-  );
   return (
     <Flex
       flexDirection='column'
@@ -48,7 +44,14 @@ export const Aside = () => {
         >
           Crear Cuenta
         </Button>
-
+        <Button
+          colorScheme='teal'
+          variant='solid'
+          size='lg'
+          onClick={() => navigate("/index")}
+        >
+          Inicio
+        </Button>
       </Stack>
     </Flex>
   );

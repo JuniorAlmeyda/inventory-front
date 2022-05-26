@@ -26,6 +26,8 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../../../store/actions/categoryActionsCreator';
 import { postAddProduct } from '../../../store/services/productServices';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
 const CFaBoxOpen = chakra(FaBoxOpen);
 const CFaDollarSign = chakra(FaDollarSign);
 const CFaBoxes = chakra(FaBoxes);
@@ -50,20 +52,21 @@ export const RegisterProduct = () => {
   const onSubmit = (data) => createProduct(data);
   const createProduct = async (form) => {
     const res = await postAddProduct(form);
-    console.log(
-      '🚀 ~ file: product.component.jsx ~ line 61 ~ createUser ~ res',
-      res
-    );
     const id = await res.data._id;
     const response = await uploadImage(id);
     if (response.statusText === 'OK') {
+      Swal.fire(
+        'el producto ha sido creado',
+        '"',
+        'success'
+      )
       navigate('/index');
     }
   };
   const uploadImage = async (uid) => {
     let formData = new FormData();
     formData.append('archivo', image);
-    const url = `http://localhost:8080/api/uploads/productos/${uid}`;
+    const url = `http://localhost:8081/api/uploads/productos/${uid}`;
     const config = {
       method: 'put',
       url,

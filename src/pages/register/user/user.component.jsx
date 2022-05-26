@@ -56,7 +56,7 @@ export const User = () => {
   const uploadImage = async (uid) => {
     let formData = new FormData();
     formData.append('archivo', image);
-    const url = `http://localhost:8080/api/uploads/usuarios/${uid}`;
+    const url = `http://localhost:8081/api/uploads/usuarios/${uid}`;
     const config = {
       method: 'put',
       url,

@@ -14,6 +14,7 @@ import { FaBoxes } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { postAddCategory } from "../../../store/services/categoryServices";
+import Swal from 'sweetalert2';
 const CFaBoxes = chakra(FaBoxes);
 
 export const RegisterCategory = () => {
@@ -23,7 +24,18 @@ export const RegisterCategory = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const onSubmit = (data) => postAddCategory(data.nombre);
+  const onSubmit =async (data) => {
+  const res=await  postAddCategory(data.nombre)
+  console.log('🚀 ~ file: category.component.jsx ~ line 28 ~ onSubmit ~ res', res)
+    if (res.statusText === 'Created') {
+      Swal.fire(
+        'la categoria ha sido creado',
+        '"',
+        'success'
+      )
+      navigate('/index');
+    }
+  };
   return (
     <Flex
       flexDirection='column'
