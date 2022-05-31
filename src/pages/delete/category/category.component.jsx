@@ -9,15 +9,24 @@ import {
   chakra,
   Box,
   FormControl,
+  Select
 } from "@chakra-ui/react";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import { deleteCategoryById } from "../../../store/services/categoryServices";
 import Swal from 'sweetalert2';
+import { fetchCategories } from "../../../store/actions/categoryActionsCreator";
 const CFaTrash = chakra(FaTrash);
  const DeleteCategory = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.category.categorias);
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
   const {
     register,
     handleSubmit,
@@ -59,7 +68,7 @@ const CFaTrash = chakra(FaTrash);
               backgroundColor='whiteAlpha.900'
               boxShadow='md'
             >
-              <FormControl>
+              {/* <FormControl>
                 <InputGroup>
                   <InputLeftElement
                     pointerEvents='none'
@@ -72,6 +81,19 @@ const CFaTrash = chakra(FaTrash);
                   />
                 </InputGroup>
                 {errors.id && <span>ingresar un id</span>}
+              </FormControl> */}
+              <FormControl>
+                <Select
+                  variant='filled'
+                  placeholder='Selecciona la categoria'
+                  {...register('id', { required: true })}
+                >
+                  {data.map((categoria) => (
+                    <option value={categoria._id} key={categoria._id}>
+                      {categoria.nombre}
+                    </option>
+                  ))}
+                </Select>
               </FormControl>
 
               <Stack mt='10' spacing={4} direction='row' align='center'>

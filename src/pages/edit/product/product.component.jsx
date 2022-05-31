@@ -9,16 +9,26 @@ import {
   chakra,
   Box,
   FormControl,
+  Select
 } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { editProduct } from "../../../store/services/productServices";
 import Swal from 'sweetalert2';
+import { fetchProducts } from "../../../store/actions/productActionsCreator";
 const CFaEdit = chakra(FaEdit);
 
 export const EditCategory = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.products.productos);
+  console.log('data', data);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
   const {
     register,
     handleSubmit,
@@ -60,19 +70,19 @@ export const EditCategory = () => {
               backgroundColor='whiteAlpha.900'
               boxShadow='md'
             >
+
               <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents='none'
-                    children={<CFaEdit color='gray.400' />}
-                  />
-                  <Input
-                    type='user'
-                    placeholder='Id del producto a Editar'
-                    {...register("id", { required: true })}
-                  />
-                </InputGroup>
-                {errors.nombre && <span>ingresar un id</span>}
+                <Select
+                  variant='filled'
+                  placeholder='Selecciona el Producto'
+                  {...register('id', { required: true })}
+                >
+                  {data.map((producto) => (
+                    <option value={producto._id} key={producto._id}>
+                      {producto.nombre}
+                    </option>
+                  ))}
+                </Select>
               </FormControl>
 
               <FormControl>

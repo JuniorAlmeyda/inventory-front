@@ -48,11 +48,20 @@ export const Aside = () => {
           colorScheme='teal'
           variant='solid'
           size='lg'
+          onClick={() => navigate("/")}
+        >
+          Cerrar Sesión
+        </Button>
+      </Stack>
+      <Button
+          colorScheme='teal'
+          variant='solid'
+          size='lg'
           onClick={() => navigate("/index")}
+          mt='5'
         >
           Inicio
         </Button>
-      </Stack>
     </Flex>
   );
 };

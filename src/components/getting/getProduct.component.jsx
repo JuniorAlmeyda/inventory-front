@@ -58,7 +58,7 @@ export const GetProducts = () => {
             {data.map((producto) => (
               <Tr key={producto._id}>
                 <Td>{producto?.nombre}</Td>
-                <Td>{producto?.usuario.nombre} </Td>
+                <Td>{producto?.usuario?.nombre} </Td>
                 <Td isNumeric>{producto?.precio}</Td>
                 <Td>{producto?.categoria?.nombre}</Td>
                 <Td>
@@ -146,7 +146,7 @@ export const GetProducts = () => {
               </Td>
             </Tr> */}
           </Tbody>
-          <Tfoot>
+          {/* <Tfoot>
             <Tr>
               <Th>Nombre</Th>
               <Th>Usuario</Th>
@@ -154,7 +154,7 @@ export const GetProducts = () => {
               <Th>Categoría</Th>
               <Th>Imagen</Th>
             </Tr>
-          </Tfoot>
+          </Tfoot> */}
         </Table>
       </TableContainer>
     </Flex>

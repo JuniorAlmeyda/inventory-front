@@ -63,11 +63,11 @@ export const GetCategories = () => {
               <Td>nombre de la categoria</Td>
             </Tr> */}
           </Tbody>
-          <Tfoot>
+          {/* <Tfoot>
             <Tr>
               <Th>Nombre</Th>
             </Tr>
-          </Tfoot>
+          </Tfoot> */}
         </Table>
       </TableContainer>
       <Button

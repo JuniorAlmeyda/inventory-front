@@ -17,12 +17,13 @@ import {
 import { FaUserAlt, FaRegEnvelope, FaLock } from 'react-icons/fa';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
-import UploadImage from '../../../components/upload/upalodImage.component';
+// import UploadImage from '../../../components/upload/upalodImage.component';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { fetchLogin } from '../../../store/actions/UserActionsCreator';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 const CFaUserAlt = chakra(FaUserAlt);
 const CFaRegEnvelope = chakra(FaRegEnvelope);
 const CFaLock = chakra(FaLock);
@@ -49,7 +50,12 @@ export const User = () => {
     const res = await dispatch(fetchLogin(form));
     const user = await res.usuario.uid;
     await uploadImage(user);
-    if (res === 'ok') {
+    if (res) {
+      Swal.fire(
+        'el usuario ha sido creado',
+        '"',
+        'success'
+      )
       navigate('/index');
     }
   };

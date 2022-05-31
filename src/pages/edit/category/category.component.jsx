@@ -9,16 +9,25 @@ import {
   chakra,
   Box,
   FormControl,
+  Select
 } from "@chakra-ui/react";
 import { FaEdit } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { editCategory } from "../../../store/services/categoryServices";
 import Swal from 'sweetalert2';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { fetchCategories } from "../../../store/actions/categoryActionsCreator";
 const CFaEdit = chakra(FaEdit);
 
 export const EditCategory = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.category.categorias);
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, []);
   const {
     register,
     handleSubmit,
@@ -61,19 +70,19 @@ export const EditCategory = () => {
               backgroundColor='whiteAlpha.900'
               boxShadow='md'
             >
+
               <FormControl>
-                <InputGroup>
-                  <InputLeftElement
-                    pointerEvents='none'
-                    children={<CFaEdit color='gray.400' />}
-                  />
-                  <Input
-                    type='user'
-                    placeholder='Id de la Categoría a Editar'
-                    {...register("id", { required: true })}
-                  />
-                </InputGroup>
-                {errors.id && <span>ingresar un id</span>}
+                <Select
+                  variant='filled'
+                  placeholder='Selecciona la categoria'
+                  {...register('id', { required: true })}
+                >
+                  {data.map((categoria) => (
+                    <option value={categoria._id} key={categoria._id}>
+                      {categoria.nombre}
+                    </option>
+                  ))}
+                </Select>
               </FormControl>
 
               <FormControl>
